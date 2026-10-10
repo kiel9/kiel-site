@@ -1,0 +1,465 @@
+/* kiel-site — "Console Bento" (approved 2026-09-19).
+   Dark-first. One web font: JetBrains Mono for display, numerals and labels; system sans for body.
+   No JS. Motion is CSS-only and honours prefers-reduced-motion. */
+
+/* ---- Font (self-hosted, latin subset, the one permitted web font) ------- */
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 500 700; /* variable font, latin subset */
+  font-display: swap;
+  src: url("/fonts/jetbrains-mono-latin-var.woff2") format("woff2");
+}
+
+/* ---- Tokens ------------------------------------------------------------- */
+:root {
+  --bg: #0b0e11;
+  --tile: #10141a;
+  --tile-hi: #141a21;
+  --text: #d7dde3;
+  --muted: #8391a0;
+  --accent: #34e0a1;
+  --on-accent: #06110c;
+  --rule: #1f272f;
+  --grid: rgba(255, 255, 255, 0.07);
+  --glow: rgba(52, 224, 161, 0.35);
+  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f3f5f4;
+    --tile: #ffffff;
+    --tile-hi: #fbfcfb;
+    --text: #121820;
+    --muted: #5b6873;
+    --accent: #0a7a55;
+    --on-accent: #ffffff;
+    --rule: #d7dde1;
+    --grid: rgba(0, 0, 0, 0.09);
+    --glow: rgba(10, 122, 85, 0.18);
+  }
+}
+
+/* ---- Base --------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark light;
+}
+
+body {
+  margin: 0;
+  background: var(--bg) radial-gradient(var(--grid) 1px, transparent 1.5px) 0 0 / 24px 24px;
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 1.0625rem; /* 17px */
+  line-height: 1.6;
+  -webkit-text-size-adjust: 100%;
+}
+
+p,
+li,
+h1,
+h2,
+h3 {
+  overflow-wrap: break-word;
+}
+
+.wrap {
+  max-width: 1040px;
+  margin-inline: auto;
+  padding-inline: 20px;
+}
+
+/* ---- Links & focus ------------------------------------------------------ */
+a {
+  color: var(--accent);
+  text-decoration: underline dotted;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: text-shadow 0.2s;
+}
+
+a:hover {
+  text-decoration-style: solid;
+  text-shadow: 0 0 14px var(--glow);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* ---- Typography --------------------------------------------------------- */
+h1 {
+  font-family: var(--mono);
+  font-size: clamp(1.55rem, 4.6vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0 0 18px;
+  text-wrap: balance;
+  text-shadow: 0 0 28px var(--glow);
+}
+
+h1::before {
+  content: "> ";
+  color: var(--accent);
+}
+
+h1::after {
+  content: "_";
+  color: var(--accent);
+  animation: blink 1.1s steps(2, start) infinite;
+}
+
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  h1::after {
+    animation: none;
+  }
+}
+
+h2 {
+  font-family: var(--mono);
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.35;
+  margin: 0 0 12px;
+}
+
+h3 {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 18px 0 4px;
+}
+
+p {
+  margin: 0 0 16px;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+/* Section labels rendered like code comments: "// selected work" */
+.label {
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-transform: lowercase;
+  color: var(--muted);
+  margin: 0 0 14px;
+}
+
+.label::before {
+  content: "// ";
+  color: var(--accent);
+}
+
+/* ---- Header / nav ------------------------------------------------------- */
+.site-header {
+  padding-block: 24px 6px;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 18px;
+}
+
+.site-nav {
+  display: flex;
+  gap: 22px;
+  align-items: baseline;
+  font-family: var(--mono);
+  font-size: 0.9375rem;
+  padding-bottom: 18px;
+}
+
+.site-nav a {
+  color: var(--text);
+  text-decoration: none;
+}
+
+.site-nav a:first-child {
+  font-weight: 700;
+}
+
+.site-nav a:first-child::before {
+  content: "~/";
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.site-nav a[aria-current="page"] {
+  color: var(--accent);
+}
+
+.site-nav::after {
+  content: "● jakarta · utc+7";
+  margin-left: auto;
+  color: var(--accent);
+  opacity: 0.85;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 26em) {
+  .site-nav::after {
+    display: none;
+  }
+}
+
+/* ---- Main / tiles ------------------------------------------------------- */
+main {
+  padding-block: 8px 0;
+}
+
+.bento {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.tile {
+  position: relative;
+  background: var(--tile);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 24px;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+/* Bracket corners */
+.tile::before,
+.tile::after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: var(--accent);
+  border-style: solid;
+  pointer-events: none;
+}
+
+.tile::before {
+  top: -1px;
+  left: -1px;
+  border-width: 2px 0 0 2px;
+}
+
+.tile::after {
+  bottom: -1px;
+  right: -1px;
+  border-width: 0 2px 2px 0;
+}
+
+.tile:hover {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--rule));
+  background: var(--tile-hi);
+  box-shadow: 0 0 28px rgba(52, 224, 161, 0.08);
+}
+
+.tile-hero {
+  padding: 28px 24px 26px;
+}
+
+.tile-hero p {
+  max-width: 60ch;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.tile-stat {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 6px;
+  min-height: 110px;
+  padding: 14px;
+  min-width: 0;
+}
+
+.num {
+  font-family: var(--mono);
+  font-size: clamp(1.6rem, 8vw, 3.6rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--accent);
+  text-shadow: 0 0 22px var(--glow);
+}
+
+.cap {
+  font-family: var(--mono);
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.tile-case h2 {
+  margin-top: 0;
+}
+
+.tile-case p,
+.tile-now p {
+  max-width: 66ch;
+}
+
+.case-block:first-of-type h3 {
+  margin-top: 8px;
+}
+
+.side {
+  display: grid;
+  gap: 14px;
+}
+
+.tile-contact {
+  background: var(--accent);
+  color: var(--on-accent);
+  border-color: transparent;
+}
+
+.tile-contact::before,
+.tile-contact::after {
+  border-color: var(--on-accent);
+}
+
+.tile-contact .label,
+.tile-contact .label::before {
+  color: var(--on-accent);
+}
+
+.tile-contact .label {
+  opacity: 0.75;
+}
+
+.tile-contact a {
+  color: inherit;
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: clamp(1.1rem, 2.6vw, 1.4rem);
+  text-decoration: none;
+  display: block;
+  line-height: 1.3;
+  text-shadow: none;
+}
+
+.tile-contact a::before {
+  content: "→ ";
+}
+
+.tile-contact a:hover {
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+
+.tile-contact a + a {
+  margin-top: 8px;
+}
+
+.tile-contact:hover {
+  background: var(--accent);
+  box-shadow: 0 0 36px var(--glow);
+}
+
+/* About page: one prose tile */
+.tile-prose {
+  max-width: 800px;
+}
+
+.tile-prose p {
+  max-width: 66ch;
+}
+
+@media (min-width: 52em) {
+  .bento {
+    grid-template-columns: 2fr 1fr;
+  }
+
+  .tile {
+    padding: 28px;
+  }
+
+  .tile-hero {
+    grid-column: 1;
+    padding: 36px 34px;
+  }
+
+  .stats {
+    grid-column: 2;
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-rows: 1fr;
+    gap: 14px;
+  }
+
+  .tile-stat {
+    padding: 18px 22px;
+    min-height: 0;
+  }
+
+  .num {
+    font-size: clamp(2.2rem, 3.8vw, 3.2rem);
+  }
+
+  .cap {
+    font-size: 0.6875rem;
+  }
+
+  .tile-case {
+    grid-column: 1;
+  }
+
+  .side {
+    grid-column: 2;
+  }
+
+  .tile-prose {
+    padding: 36px 40px;
+  }
+}
+
+/* ---- Footer ------------------------------------------------------------- */
+.site-footer {
+  margin-top: 64px;
+  padding-block: 22px 40px;
+  border-top: 1px solid var(--rule);
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+}
+
+.site-footer ul {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-block: 0; /* .wrap owns inline spacing */
+  list-style: none;
+}
+
+@media (min-width: 36em) {
+  .site-footer ul {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 4px 18px;
+  }
+}

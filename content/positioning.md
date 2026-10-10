@@ -14,6 +14,12 @@ Marlon Djamari — engineer-turned-product manager in Jakarta. Owns insurer inte
 - Short (nav, body copy): Marlon
 - Full (footer, About): Jehezhiel Marlon Djamari
 
+## Stats
+<!-- Three "at a glance" tiles on the home page. Format: "- figure | caption". Facts only; keep them consistent with the subline. -->
+- 8 | years building software
+- 5 | years owning product
+- JKT | jakarta · utc+7
+
 ## Links
 - LinkedIn: https://www.linkedin.com/in/jehezhiel-marlon-845838105
 - Email: jehezhiel.marlon@gmail.com
