@@ -320,7 +320,11 @@ main {
 }
 
 .tile-case p,
-.tile-now p {
+.tile-now p,
+.tile-studio p,
+.tile-who p,
+.tile-how p,
+.tile-agents p {
   max-width: 66ch;
 }
 
@@ -455,6 +459,49 @@ main {
   margin-bottom: 8px;
 }
 
+/* ---- Studio page (specs/studio-page-spec.md) ---------------------------- */
+/* Engagement steps: plain paragraphs, numbered by CSS ("01", "02", ...) */
+.steps {
+  counter-reset: step;
+}
+
+.steps p {
+  counter-increment: step;
+  display: grid;
+  grid-template-columns: 3.2ch minmax(0, 1fr);
+  gap: 12px;
+  align-items: baseline;
+}
+
+.steps p::before {
+  content: counter(step, decimal-leading-zero);
+  font-family: var(--mono);
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.agent-list {
+  display: grid;
+  gap: 16px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tile-agents .label + .agent-list {
+  margin-top: 0;
+}
+
+.agent-list h2 {
+  font-size: 1rem;
+  margin: 0 0 4px;
+}
+
+.agent-list p {
+  margin: 0;
+  color: var(--muted);
+}
+
 @media (min-width: 52em) {
   .bento {
     grid-template-columns: 2fr 1fr;
@@ -503,6 +550,14 @@ main {
 
   .work-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .tile-who {
+    grid-column: 2;
+  }
+
+  .tile-how {
+    grid-column: 1;
   }
 }
 

@@ -4,6 +4,7 @@ import positioningRaw from "../../content/positioning.md?raw";
 import nowRaw from "../../content/now.md?raw";
 import { body, paragraphs, pick, sections } from "../lib/text";
 import { getFeatured } from "../lib/work";
+import { getStudio } from "../lib/studio";
 
 // Copy comes from content/, never from this file.
 
@@ -32,6 +33,9 @@ const caseBlocks = ["Problem", "What I did", "Outcome"].map((label) => ({
 
 // --- Now ---
 const nowParagraphs = paragraphs(body(nowRaw));
+
+// --- Studio tile: only when content/studio.md exists ---
+const studio = getStudio();
 
 const title = `${shortName} — ${headline}`;
 ---
@@ -74,6 +78,14 @@ const title = `${shortName} — ${headline}`;
         {nowParagraphs.map((p) => <p>{p}</p>)}
         <p><a href={linkedin}>Follow along on LinkedIn</a></p>
       </section>
+
+      {studio && (
+        <section class="tile tile-studio" aria-labelledby="studio">
+          <p class="label" id="studio">Studio</p>
+          {paragraphs(studio.tile).map((p) => <p>{p}</p>)}
+          <p><a href="/studio">See the studio</a></p>
+        </section>
+      )}
 
       <section class="tile tile-contact" aria-labelledby="contact">
         <p class="label" id="contact">Contact</p>
