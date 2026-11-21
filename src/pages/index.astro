@@ -1,33 +1,11 @@
 ---
 import Base from "../layouts/Base.astro";
 import positioningRaw from "../../content/positioning.md?raw";
-import caseStudyRaw from "../../content/case-study-claims-api.md?raw";
 import nowRaw from "../../content/now.md?raw";
+import { body, paragraphs, pick, sections } from "../lib/text";
+import { getFeatured } from "../lib/work";
 
-// --- Tiny markdown reader: copy comes from content/, never from this file. ---
-const strip = (s: string) => s.replace(/<!--[\s\S]*?-->/g, "").trim();
-
-/** Map of "## Heading" -> body text (comments removed). */
-function sections(raw: string): Record<string, string> {
-  const out: Record<string, string> = {};
-  for (const part of raw.split(/^## /m).slice(1)) {
-    const nl = part.indexOf("\n");
-    out[part.slice(0, nl).trim()] = strip(part.slice(nl + 1));
-  }
-  return out;
-}
-
-/** First section whose heading starts with `prefix`. */
-const pick = (map: Record<string, string>, prefix: string) =>
-  map[Object.keys(map).find((k) => k.startsWith(prefix)) ?? ""] ?? "";
-
-/** Text after the "# Title" line, comments removed. */
-const body = (raw: string) => strip(raw.replace(/^# .*\n/, ""));
-
-/** "# Title" line without the hash. */
-const h1Of = (raw: string) => raw.match(/^# (.+)$/m)?.[1].trim() ?? "";
-
-const paragraphs = (s: string) => s.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
+// Copy comes from content/, never from this file.
 
 // --- Positioning ---
 const pos = sections(positioningRaw);
@@ -44,14 +22,13 @@ const stats = [...pick(pos, "Stats").matchAll(/^- (.+?) \| (.+)$/gm)].map((m) =>
   caption: m[2].trim(),
 }));
 
-// --- Case study ---
-const cs = sections(caseStudyRaw);
-const caseTitle = h1Of(caseStudyRaw);
-const caseBlocks = [
-  { label: "Problem", text: pick(cs, "Problem") },
-  { label: "What I did", text: pick(cs, "What I did") },
-  { label: "Outcome", text: pick(cs, "Outcome") },
-];
+// --- Selected work: the one featured case study in content/work/ ---
+const featured = await getFeatured();
+const caseTitle = featured.title;
+const caseBlocks = ["Problem", "What I did", "Outcome"].map((label) => ({
+  label,
+  text: featured.sections[label],
+}));
 
 // --- Now ---
 const nowParagraphs = paragraphs(body(nowRaw));
