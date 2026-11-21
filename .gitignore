@@ -10,3 +10,6 @@ yarn-error.log*
 pnpm-debug.log*
 .idea/
 .gstack/
+
+# Draft copy, kept out of git until it passes the sanitisation check
+drafts/

@@ -320,7 +320,11 @@ main {
 }
 
 .tile-case p,
-.tile-now p {
+.tile-now p,
+.tile-studio p,
+.tile-who p,
+.tile-how p,
+.tile-agents p {
   max-width: 66ch;
 }
 
@@ -391,6 +395,113 @@ main {
   max-width: 66ch;
 }
 
+/* ---- Work pages (specs/work-page-spec.md) ------------------------------- */
+.stack {
+  display: grid;
+  gap: 14px;
+}
+
+.work-list {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: minmax(0, 1fr);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.work-tile h2 a {
+  color: var(--text);
+  text-decoration-color: color-mix(in srgb, var(--accent) 60%, transparent);
+}
+
+.work-tile h2 a:hover {
+  color: var(--accent);
+}
+
+.work-tile p {
+  max-width: 60ch;
+}
+
+/* Kind tag + problem label: "[CASE STUDY] partner spec review" */
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 12px;
+  margin: 0 0 14px;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.kind {
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 1px 8px;
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.back {
+  font-family: var(--mono);
+  font-size: 0.875rem;
+}
+
+.tile-item .meta {
+  margin-bottom: 4px;
+}
+
+.tile-item h2 {
+  margin-top: 28px;
+  margin-bottom: 8px;
+}
+
+/* ---- Studio page (specs/studio-page-spec.md) ---------------------------- */
+/* Engagement steps: plain paragraphs, numbered by CSS ("01", "02", ...) */
+.steps {
+  counter-reset: step;
+}
+
+.steps p {
+  counter-increment: step;
+  display: grid;
+  grid-template-columns: 3.2ch minmax(0, 1fr);
+  gap: 12px;
+  align-items: baseline;
+}
+
+.steps p::before {
+  content: counter(step, decimal-leading-zero);
+  font-family: var(--mono);
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.agent-list {
+  display: grid;
+  gap: 16px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tile-agents .label + .agent-list {
+  margin-top: 0;
+}
+
+.agent-list h2 {
+  font-size: 1rem;
+  margin: 0 0 4px;
+}
+
+.agent-list p {
+  margin: 0;
+  color: var(--muted);
+}
+
 @media (min-width: 52em) {
   .bento {
     grid-template-columns: 2fr 1fr;
@@ -435,6 +546,18 @@ main {
 
   .tile-prose {
     padding: 36px 40px;
+  }
+
+  .work-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .tile-who {
+    grid-column: 2;
+  }
+
+  .tile-how {
+    grid-column: 1;
   }
 }
 

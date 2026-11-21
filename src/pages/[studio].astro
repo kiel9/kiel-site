@@ -1,0 +1,63 @@
+---
+import Base from "../layouts/Base.astro";
+import { pageTitle, site } from "../lib/site";
+import { getStudio, type Studio } from "../lib/studio";
+import { paragraphs } from "../lib/text";
+import { getWork } from "../lib/work";
+
+// /studio is built only when content/studio.md exists (specs/studio-page-spec.md).
+export function getStaticPaths() {
+  return getStudio() ? [{ params: { studio: "studio" } }] : [];
+}
+
+const studio = getStudio() as Studio;
+const agents = (await getWork()).filter((item) => item.kind === "agent");
+---
+
+<Base title={pageTitle(studio.h1)} description={studio.description}>
+  <div class="bento">
+    <section class="tile tile-hero" aria-labelledby="studio-title">
+      <h1 id="studio-title">{studio.h1}</h1>
+      {paragraphs(studio.whatWeDo).map((p) => <p>{p}</p>)}
+    </section>
+
+    {studio.whoFor && (
+      <section class="tile tile-who" aria-labelledby="who">
+        <p class="label" id="who">Who it's for</p>
+        {paragraphs(studio.whoFor).map((p) => <p>{p}</p>)}
+      </section>
+    )}
+
+    {studio.engagement && (
+      <section class="tile tile-how" aria-labelledby="how">
+        <p class="label" id="how">How an engagement works</p>
+        <div class="steps">
+          {paragraphs(studio.engagement).map((p) => <p>{p}</p>)}
+        </div>
+      </section>
+    )}
+
+    <div class="side">
+      {agents.length > 0 && (
+        <section class="tile tile-agents" aria-labelledby="agents">
+          <p class="label" id="agents">Agents</p>
+          {paragraphs(studio.agentsIntro).map((p) => <p>{p}</p>)}
+          <ul class="agent-list">
+            {agents.map((agent) => (
+              <li>
+                <h2><a href={`/work/${agent.slug}`}>{agent.title}</a></h2>
+                <p>{agent.summary}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <section class="tile tile-contact" aria-labelledby="start">
+        <p class="label" id="start">Start a conversation</p>
+        <a href={site.linkedin}>LinkedIn ↗</a>
+        <a href={`mailto:${site.email}`}>Email ↗</a>
+      </section>
+    </div>
+  </div>
+</Base>

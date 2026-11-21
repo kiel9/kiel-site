@@ -1,4 +1,11 @@
-# Case study: Insurance claims API integration
+---
+title: "Case study: Insurance claims API integration"
+kind: case-study
+problem: Partner spec review
+summary: Read an insurance partner's API spec against itself and caught its contradictions before any code was written.
+featured: true
+order: 1
+---
 <!-- Sanitized. No partner names, no internal system names, no numbers you can't defend. ≤150 words total across the three blocks. -->
 
 ## Problem

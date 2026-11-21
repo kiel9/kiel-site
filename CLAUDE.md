@@ -16,9 +16,13 @@ Audience: hiring managers, founders, potential B2B automation clients in Indones
 ## Structure
 - `src/pages/index.astro` — home (positioning, case study, "now building", contact)
 - `src/pages/about.astro` — longer story, engineer → PM
+- `src/pages/work/` — portfolio: `index.astro` (`/work`) and `[slug].astro` (one page per work item)
+- `src/pages/[studio].astro` — Studio company profile, built only when `content/studio.md` exists
+- `src/content.config.ts` — the `work` collection schema; `src/lib/` — shared markdown helpers, loaders and build checks (pages read work items through `src/lib/work.ts`)
 - `src/layouts/Base.astro` — single shared layout, head, nav, footer
 - `src/styles/global.css`
 - `content/` — source copy written by Marlon. ALWAYS pull copy from here, never invent bio facts. Stat tiles read `## Stats` in `content/positioning.md`.
+- `content/work/` — one markdown file per work item (case study or agent). `content/work-index.md` and `content/studio.md` hold the Work and Studio page copy. Drafts live in the gitignored `drafts/` until they pass the sanitisation check in `specs/work-page-spec.md`.
 - `specs/` — page specs. Build to the spec; if the spec is ambiguous, ask ONE clarifying question, don't guess.
 
 ## Rules

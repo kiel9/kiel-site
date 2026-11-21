@@ -13,7 +13,7 @@ Unzip so you have a folder named `kiel-site`. Move it somewhere sane, e.g. `~/pr
 
 ## 2. Edit the content files (08:00–08:45)
 - `content/positioning.md` — real LinkedIn URL and email
-- `content/case-study-claims-api.md` — fill the Outcome line with something true
+- `content/work/claims-api-integration.md` — fill the Outcome line with something true
 - `content/about.md` — rewrite in your voice
 Everything else is ready.
 

@@ -1,0 +1,31 @@
+---
+import Base from "../../layouts/Base.astro";
+import { pageTitle } from "../../lib/site";
+import { paragraphs } from "../../lib/text";
+import { getWork, KIND_LABEL, type WorkItem } from "../../lib/work";
+
+// One page per file in content/work/. Rules: specs/work-page-spec.md.
+export async function getStaticPaths() {
+  const items = await getWork();
+  return items.map((item) => ({ params: { slug: item.slug }, props: { item } }));
+}
+
+const { item } = Astro.props as { item: WorkItem };
+---
+
+<Base title={pageTitle(item.title)} description={item.summary}>
+  <article class="tile tile-prose tile-item">
+    <p class="back"><a href="/work">← All work</a></p>
+    <h1>{item.title}</h1>
+    <p class="meta">
+      <span class="kind">{KIND_LABEL[item.kind]}</span>
+      <span>{item.problem}</span>
+    </p>
+    {Object.entries(item.sections).map(([heading, text]) => (
+      <section>
+        <h2>{heading}</h2>
+        {paragraphs(text).map((p) => <p>{p}</p>)}
+      </section>
+    ))}
+  </article>
+</Base>
