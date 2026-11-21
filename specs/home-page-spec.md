@@ -12,10 +12,10 @@ Dark-first terminal aesthetic on a bento tile layout. Chosen after a design expl
 - h1 rendered with a `> ` prompt and a blinking `_` cursor (CSS only, disabled under `prefers-reduced-motion`).
 - Section labels are lowercase code comments: `// selected work`, `// now`, `// contact`.
 - Tiles: 4px radius, 1px rule, accent bracket corners top-left and bottom-right, subtle glow on hover.
-- Nav: `~/Marlon` (home) and `About`; a `● jakarta · utc+7` status line on the right (hidden ≤26em).
+- Nav: `~/Marlon` (home), `Work`, `Studio` (only when `/studio` is built, see `specs/studio-page-spec.md`) and `About`; a `● jakarta · utc+7` status line on the right (hidden ≤26em).
 
 ## Non-goals
-- No blog, no project grid, no testimonials, no skills bar charts.
+- No blog, no project grid on home (the portfolio lives on `/work`, see `specs/work-page-spec.md`), no testimonials, no skills bar charts.
 - No hero image, no stock photography, no illustration.
 - No client-side JS. No motion beyond the cursor blink and hover transitions.
 
@@ -32,9 +32,9 @@ Dark-first terminal aesthetic on a bento tile layout. Chosen after a design expl
 
 ### 3. Selected work tile (2 columns on desktop)
 - Label: "Selected work"
-- One case study from `content/case-study-claims-api.md`
-  - h2 = case study title
-  - Three labeled blocks: Problem / What I did / Outcome
+- The featured item from `content/work/` (exactly one, always a case study; read through `src/lib/work.ts`)
+  - h2 = its frontmatter `title`
+  - Three labeled blocks from its body sections: Problem / What I did / Outcome
   - ≤150 words total
 
 ### 4. Now tile (right column)
@@ -42,11 +42,17 @@ Dark-first terminal aesthetic on a bento tile layout. Chosen after a design expl
 - 2–3 sentences from `content/now.md`
 - Link text "Follow along on LinkedIn" → LinkedIn URL
 
-### 5. Contact tile (right column, accent background)
+### 5. Studio tile (right column, between Now and Contact)
+- Rendered only when `content/studio.md` exists.
+- Label: "Studio"
+- One sentence from `## Tile` in `content/studio.md`
+- Link text "See the studio" → `/studio`
+
+### 6. Contact tile (right column, accent background)
 - Label: "Contact"
 - Two links: LinkedIn, Email.
 
-### 6. Footer
+### 7. Footer
 - Name, "Jakarta", year, LinkedIn, email. One line on desktop, stacked on mobile.
 
 ## Layout & style
@@ -64,3 +70,4 @@ Dark-first terminal aesthetic on a bento tile layout. Chosen after a design expl
 - [ ] `<title>` and `<meta name="description">` set from `content/positioning.md`
 - [ ] Exactly one web font family loaded, self-hosted from `public/fonts/`, preloaded, `font-display: swap`
 - [ ] Cursor blink disabled under `prefers-reduced-motion`
+- [ ] Studio tile and Studio nav item render only when `content/studio.md` exists
