@@ -1,9 +1,23 @@
 import { getCollection } from "astro:content";
-import { preamble, sections, validateSections } from "./text";
+import workIndexRaw from "../../content/work-index.md?raw";
+import { h1Of, sections, preamble, validateSections } from "./text";
 
 // Every page reads work items through this file (specs/work-page-spec.md).
 
+/** Copy for /work from content/work-index.md. Throws on a missing part. */
+export function getWorkIndex() {
+  const file = "content/work-index.md";
+  const h1 = h1Of(workIndexRaw);
+  if (!h1) throw new Error(`${file}: missing the "# " heading line.`);
+  const map = sections(workIndexRaw);
+  validateSections(file, map, ["Meta description"]);
+  return { h1, description: map["Meta description"], intro: map["Intro"] ?? "" };
+}
+
 export type Kind = "case-study" | "agent";
+
+/** Tag text shown on tiles and item pages. */
+export const KIND_LABEL: Record<Kind, string> = { "case-study": "case study", agent: "agent" };
 
 export const REQUIRED_SECTIONS: Record<Kind, readonly string[]> = {
   "case-study": ["Problem", "What I did", "Outcome"],

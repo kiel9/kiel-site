@@ -1,0 +1,32 @@
+---
+import Base from "../../layouts/Base.astro";
+import { pageTitle } from "../../lib/site";
+import { paragraphs } from "../../lib/text";
+import { getWork, getWorkIndex, KIND_LABEL } from "../../lib/work";
+
+// Copy: content/work-index.md and content/work/*.md. Rules: specs/work-page-spec.md.
+const index = getWorkIndex();
+const items = await getWork();
+---
+
+<Base title={pageTitle(index.h1)} description={index.description}>
+  <div class="stack">
+    <section class="tile tile-hero" aria-labelledby="work-title">
+      <h1 id="work-title">{index.h1}</h1>
+      {paragraphs(index.intro).map((p) => <p>{p}</p>)}
+    </section>
+
+    <ul class="work-list" aria-label="Work items">
+      {items.map((item) => (
+        <li class="tile work-tile">
+          <p class="meta">
+            <span class="kind">{KIND_LABEL[item.kind]}</span>
+            <span>{item.problem}</span>
+          </p>
+          <h2><a href={`/work/${item.slug}`}>{item.title}</a></h2>
+          <p>{item.summary}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Base>
